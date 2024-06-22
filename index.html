@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock, Paper, Scissors Game</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        h1, h4 {
+            color: white;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: rgb(0, 77, 78);
+        }
+
+        .game-container {
+            background-color: rgb(0, 128, 139);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            margin: auto;
+            padding: 10px;
+        }
+
+        .choices i {
+            font-size: 80px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .choices i:hover {
+            transform: scale(1.1);
+        }
+
+        .result-message {
+            font-size: 24px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            .choices img, .results img {
+                width: 80px;
+                margin: 5px;
+            }
+
+            .result-message {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>Rock, Paper, Scissors</h1>
+        <div class="choices">
+            <div class="choices">
+                <i class="fa fa-hand-rock-o" aria-hidden="true" onclick="playGame('rock')"></i>
+                <i class="fa fa-hand-paper-o" aria-hidden="true" onclick="playGame('paper')"></i>
+                <i class="fa fa-hand-scissors-o" aria-hidden="true" onclick="playGame('scissors')"></i>
+            </div>
+        <div class="results">
+            <h4>YOUR PICK:</h4>
+            <i id="your-pick" aria-hidden="true"></i>
+            <h4>ENEMY'S PICK:</h4>
+            <i id="enemy-pick" aria-hidden="true"></i>
+            <div id="result-message" class="result-message"></div>
+        </div>
+    </div>
+
+    <script>
+        function playGame(yourChoice) {
+            const choices = ['rock', 'paper', 'scissors'];
+            const enemyChoice = choices[Math.floor(Math.random() * choices.length)];
+
+            const iconMap = {
+                'rock': 'fa-hand-rock-o',
+                'paper': 'fa-hand-paper-o',
+                'scissors': 'fa-hand-scissors-o'
+            };
+
+            document.getElementById('your-pick').className = 'fa ' + iconMap[yourChoice];
+            document.getElementById('your-pick').setAttribute('aria-hidden', 'true');
+
+            document.getElementById('enemy-pick').className = 'fa ' + iconMap[enemyChoice];
+            document.getElementById('enemy-pick').setAttribute('aria-hidden', 'true');
+
+            const resultMessage = determineWinner(yourChoice, enemyChoice);
+            document.getElementById('result-message').innerText = resultMessage;
+        }
+
+        function determineWinner(you, enemy) {
+            if (you === enemy) {
+                return ">>> IT'S A TIE <<<";
+            }
+
+            if ((you === 'rock' && enemy === 'scissors') ||
+                (you === 'paper' && enemy === 'rock') ||
+                (you === 'scissors' && enemy === 'paper')) {
+                    return '>>> YOU WIN <<<';
+                }
+                return '>>> YOU LOSE <<<';
+        }
+    </script>
+</body>
+</html>
